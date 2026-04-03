@@ -14,10 +14,10 @@ jobs:
         - name: Welcome Message
           run: echo "Welcome to GitHub Actions"
 
-        - name: List Files
-          run: ls
-
-        - name: Cat Files
+        - name: Generating ASCII art
           run: |
-           echo "Namaskaaaram unde......." > file
-           cat file
+            apt install cowsay -y
+            cowsay -f dragon "Grrrrr......" > dragon.txt
+            cat dragon.txt
+
+        
