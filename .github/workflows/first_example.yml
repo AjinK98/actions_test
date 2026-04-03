@@ -10,7 +10,6 @@ jobs:
         - name: Welcome Message
           run: echo "Welcome to GitHub Actions"
 
-        steps:
         - name: List Files
           run: ls
 
