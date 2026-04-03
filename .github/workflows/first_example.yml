@@ -13,4 +13,7 @@ jobs:
         - name: List Files
           run: ls
 
-        
+        - name: Cat Files
+          run: |
+           ls > file
+           cat file
