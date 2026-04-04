@@ -2,7 +2,8 @@
 name: Webserver Version
 
 on: 
-  push: main
+  push: 
+    
   workflow_dispatch:
 
 jobs:
