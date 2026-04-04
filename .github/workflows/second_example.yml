@@ -2,7 +2,6 @@
 name: Generate ASCII art
 
 on: 
-  push:
   workflow_dispatch:  
 
 jobs:
@@ -14,7 +13,7 @@ jobs:
             run: sudo apt install cowsay -y
 
           - name: Execute Cowsay CMD
-            run: cowsay -f dragon "Grrr......" > dragon.txt
+            run: cowsay -f dragon "${{ github.event.inputs.message }}" > dragon.txt
 
           - name: Upload Artifact  
             uses: actions/upload-artifact@v4
