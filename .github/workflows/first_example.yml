@@ -1,31 +1,29 @@
-name: Deploy via SSH
+---
+name: Webserver Version
 
-on:
+on: 
   push:
-    branches: ["main"]
+    branches:
+      - master
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  "Webserver-Version":
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository code
         uses: actions/checkout@v4
 
-      - name: Setup SSH
+      - name: Adding host key
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-
-      - name: Add server to known_hosts
+           mkdir -p ~/.ssh
+           ssh-keyscan -H ${{secrets.SSH_HOST}} >> ~/.ssh/known_hosts
+      - name: Adding private key
         run: |
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-
-      - name: Deploy with rsync
+           echo "${{secrets.SSH_PRIVATE_KEY}}" >> ~/.ssh/id_rsa
+           chmod 600 ~/.ssh/id_rsa
+      - name: Deploy
         run: |
-          rsync -avz --delete \
-            --exclude='.git' \
-            --exclude='.github' \
-            ./ \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/html/
+           rsync -avzh ./ ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:/tmp/deploy
+           ssh ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}} "sudo rsync -avzh --delete /tmp/deploy/* /var/www/html/"
