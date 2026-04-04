@@ -1,7 +1,6 @@
 name: Generate ASCII art
 
 on: 
-  push:
   workflow_dispatch:
     inputs:
       message:
