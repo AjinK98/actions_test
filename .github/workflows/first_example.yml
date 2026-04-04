@@ -1,9 +1,7 @@
----
 name: Webserver Version
 
 on: 
-  push: 
-    
+  push:
   workflow_dispatch:
 
 jobs:
@@ -14,15 +12,17 @@ jobs:
       - name: Checkout repository code
         uses: actions/checkout@v4
 
-      - name: Adding host key
-        run: |
-           mkdir -p ~/.ssh
-           ssh-keyscan -H ${{secrets.SSH_HOST}} >> ~/.ssh/known_hosts
-      - name: Adding private key
-        run: |
-           echo "${{secrets.SSH_PRIVATE_KEY}}" >> ~/.ssh/id_rsa
-           chmod 600 ~/.ssh/id_rsa
-      - name: Deploy
-        run: |
-           rsync -avzh ./ ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:/tmp/deploy
-           ssh ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}} "sudo rsync -avzh --delete /tmp/deploy/* /var/www/html/"
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.SSH_HOST }}
+          REMOTE_USER: ${{ secrets.SSH_USER }}
+          SOURCE: "./"
+          TARGET: "/tmp/deploy"
+          # Optional: Add any extra rsync arguments here
+          ARGS: "-avzh --delete"
+          # This runs the final command on your server after the transfer
+          SCRIPT_AFTER: |
+            sudo rsync -avzh --delete /tmp/deploy/ /var/www/html/
+            sudo rm -rf /tmp/deploy/*
