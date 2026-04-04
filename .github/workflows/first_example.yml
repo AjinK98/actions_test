@@ -2,7 +2,7 @@ name: Webserver Version
 
 on: 
   push:
-    
+
   workflow_dispatch:
 
 jobs:
@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Deploy to EC2
         uses: easingthemes/ssh-deploy@main
