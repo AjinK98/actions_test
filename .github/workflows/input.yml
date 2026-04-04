@@ -3,7 +3,7 @@ name: Input Testing
 on:
   workflow_dispatch:
     inputs:
-        Name:
+        name:
         description: Your Name
         required: true
         default: Paalu
@@ -19,4 +19,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    steps:
+      - name: Name
+        run: |
+          echo "My name is ${{ inputs.name }}"
+          echo "Are you happy - ${{ inputs.happy }}"
     
