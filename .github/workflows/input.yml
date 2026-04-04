@@ -4,18 +4,18 @@ on:
   workflow_dispatch:
     inputs:
         name:
-        description: Your Name
-        required: true
-        default: Paalu
-        type: choice
-        options:
-          - Makku
-          - Chmitt
-          - Ajin
-      happy:
-        description: 'Are you happy?'
-        required: false
-        type: boolean
+          description: Your Name
+          required: true
+          default: Makku
+          type: choice
+          options:
+            - Makku
+            - Chmitt
+            - Ajin
+        happy:
+          description: 'Are you happy?'
+          required: false
+          type: boolean
 jobs:
   test:
     runs-on: ubuntu-latest
