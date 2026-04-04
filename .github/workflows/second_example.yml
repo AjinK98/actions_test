@@ -2,7 +2,7 @@
 name: Generate ASCII art
 
 on: 
-  push
+  push:
   workflow_dispatch:  
 
 jobs:
