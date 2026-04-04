@@ -1,13 +1,16 @@
-on:
+name: Generate ASCII art
+
+on: 
+  push:
   workflow_dispatch:
     inputs:
       message:
-        description: "Test message"
+        description: "Message for cowsay"
         required: true
         default: "Hello"
 
 jobs:
-  test:
+  build-job-1:
     runs-on: ubuntu-latest
     steps:
       - name: Print input
