@@ -20,7 +20,7 @@ jobs:
 
       - name: Deploy with rsync
         run: |
-          rsync -avz --delete \
+          sudo rsync -avz --delete \
             --exclude='.git' \
             --exclude='.github' \
             ./ \
