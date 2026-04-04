@@ -2,6 +2,7 @@ name: Webserver Version
 
 on: 
   push:
+    
   workflow_dispatch:
 
 jobs:
@@ -12,17 +13,19 @@ jobs:
       - name: Checkout repository code
         uses: actions/checkout@v4
 
-      - name: Deploy to Server
+      - name: Deploy to EC2
         uses: easingthemes/ssh-deploy@main
         with:
+          # SSH Setup
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           REMOTE_HOST: ${{ secrets.SSH_HOST }}
-          REMOTE_USER: ${{ secrets.SSH_USER }}
+          REMOTE_USER: ec2-user
+          # Sync Logic
           SOURCE: "./"
-          TARGET: "/tmp/deploy"
-          # Optional: Add any extra rsync arguments here
+          TARGET: "/var/www/html"
+          
           ARGS: "-avzh --delete"
-          # This runs the final command on your server after the transfer
+          
           SCRIPT_AFTER: |
-            sudo rsync -avzh --delete /tmp/deploy/ /var/www/html/
-            sudo rm -rf /tmp/deploy/*
+            echo "Deployment to /var/www/html complete."
+            
