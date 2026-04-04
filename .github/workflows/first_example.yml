@@ -2,9 +2,7 @@
 name: Webserver Version
 
 on: 
-  push:
-    branches:
-      - master
+  push: main
   workflow_dispatch:
 
 jobs:
