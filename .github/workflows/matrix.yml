@@ -11,11 +11,11 @@ jobs:
         os: [ubuntu-latest, windows-latest, ubuntu-20.04]
         images: [hello-world, alpine]
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }} 
     steps:
-      - name: Echo Docker Details
+      - name: Echo Docker Details - ${{ matrix.os }}
         run: docker info
      
-      - name: Run Images
-        run: docker run hello-world
+      - name: Run Images - ${{ matrix.images }}
+        run: docker run ${{ matrix.images }}
   
